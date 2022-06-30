@@ -37,7 +37,6 @@ WORKDIR $REMOTE_SOURCE_APP_DIR
 
 
 RUN dnf update -y \
-  && dnf --enablerepo=extras install epel-release \
   && dnf install -y python310-devel git \
   && dnf clean all \
   && rm -rf /var/cache/{dnf,yum} \
