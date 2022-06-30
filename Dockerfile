@@ -37,7 +37,7 @@ WORKDIR $REMOTE_SOURCE_APP_DIR
 
 
 RUN dnf update -y \
-  && dnf install -y python310-devel git \
+  && dnf install -y git \
   && dnf clean all \
   && rm -rf /var/cache/{dnf,yum} \
   && rm -rf /var/lib/dnf/history.* \
