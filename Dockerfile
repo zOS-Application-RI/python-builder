@@ -46,7 +46,8 @@ RUN if [[ "$CONTAINER_IMAGE" =~ "centos" ]] ; then \
     rm -rf /var/lib/dnf/history.* ; \
     rm -rf /var/log/* ; \
   fi
-RUN wget https://ftp.riken.jp/Linux/fedora/epel/epel-release-latest-9.noarch.rpm \
+RUN dnf install -y wget \
+    && wget https://ftp.riken.jp/Linux/fedora/epel/epel-release-latest-9.noarch.rpm \
     && dnf localinstall -y epel-release-latest-9.noarch.rpm 
 RUN dnf update -y \
   && dnf --enablerepo=extras install epel-release \
