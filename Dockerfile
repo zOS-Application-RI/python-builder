@@ -48,7 +48,8 @@ RUN if [[ "$CONTAINER_IMAGE" =~ "centos" ]] ; then \
   fi
 RUN dnf install -y wget \
     && wget https://ftp.riken.jp/Linux/fedora/epel/epel-release-latest-9.noarch.rpm \
-    && dnf localinstall -y epel-release-latest-9.noarch.rpm 
+    && dnf localinstall -y epel-release-latest-9.noarch.rpm \
+    && dnf config-manager --set-enabled powertools
 RUN dnf update -y \
   && dnf --enablerepo=extras install epel-release \
   && dnf install -y python3-wheel git \
