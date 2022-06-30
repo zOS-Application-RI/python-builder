@@ -35,30 +35,17 @@ COPY --from=builder $REMOTE_SOURCE_APP_DIR/scripts/install-from-bindep /output/i
 
 WORKDIR $REMOTE_SOURCE_APP_DIR
 
-RUN if [[ "$CONTAINER_IMAGE" =~ "centos" ]] ; then \
-    dnf update -y ; \
-    dnf install -y epel-release dnf-plugins-core ; \
-    dnf config-manager --set-enabled epel ; \
-    dnf config-manager --set-enabled powertools ; \
-    dnf module enable -y python310-devel ; \
-    dnf clean all ; \
-    rm -rf /var/cache/{dnf,yum} ; \
-    rm -rf /var/lib/dnf/history.* ; \
-    rm -rf /var/log/* ; \
-  fi
-RUN dnf install -y wget \
-    && wget https://ftp.riken.jp/Linux/fedora/epel/epel-release-latest-9.noarch.rpm \
-    && dnf localinstall -y epel-release-latest-9.noarch.rpm \
-    && dnf config-manager --set-enabled powertools
+
 RUN dnf update -y \
   && dnf --enablerepo=extras install epel-release \
-  && dnf install -y python3-wheel git \
+  && dnf install -y python310-devel git \
   && dnf clean all \
   && rm -rf /var/cache/{dnf,yum} \
   && rm -rf /var/lib/dnf/history.* \
   && rm -rf /var/log/*
 
 RUN cat build-requirements.txt requirements.txt | sort > upper-constraints.txt \
+  && pip3 install --no-cache-dir wheel \
   && pip3 install --no-cache-dir -r build-requirements.txt -c upper-constraints.txt \
   && pip3 install --no-cache-dir -r requirements.txt -c upper-constraints.txt
 
