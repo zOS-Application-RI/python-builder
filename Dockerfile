@@ -35,6 +35,18 @@ COPY --from=builder $REMOTE_SOURCE_APP_DIR/scripts/install-from-bindep /output/i
 
 WORKDIR $REMOTE_SOURCE_APP_DIR
 
+RUN if [[ "$CONTAINER_IMAGE" =~ "centos" ]] ; then \
+    dnf update -y ; \
+    dnf install -y epel-release dnf-plugins-core ; \
+    dnf config-manager --set-enabled epel ; \
+    dnf config-manager --set-enabled powertools ; \
+    dnf module enable -y python310-devel ; \
+    dnf clean all ; \
+    rm -rf /var/cache/{dnf,yum} ; \
+    rm -rf /var/lib/dnf/history.* ; \
+    rm -rf /var/log/* ; \
+  fi
+
 RUN dnf update -y \
   && dnf install -y python3-wheel git \
   && dnf clean all \
