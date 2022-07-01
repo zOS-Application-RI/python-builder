@@ -35,7 +35,6 @@ COPY --from=builder $REMOTE_SOURCE_APP_DIR/scripts/install-from-bindep /output/i
 
 WORKDIR $REMOTE_SOURCE_APP_DIR
 
-
 RUN dnf update -y \
   && dnf install -y git \
   && dnf clean all \
