@@ -48,4 +48,5 @@ RUN cat build-requirements.txt requirements.txt | sort > upper-constraints.txt \
   && pip3 install --no-cache-dir -r requirements.txt -c upper-constraints.txt
 
 WORKDIR /
+
 RUN rm -rf $REMOTE_SOURCE_APP_DIR
