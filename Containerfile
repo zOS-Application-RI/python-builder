@@ -36,7 +36,7 @@ COPY --from=builder $REMOTE_SOURCE_APP_DIR/scripts/install-from-bindep /output/i
 WORKDIR $REMOTE_SOURCE_APP_DIR
 
 RUN dnf update -y \
-  && dnf install -y python38-wheel git \
+  && dnf install -y python3-wheel git \
   && dnf clean all \
   && rm -rf /var/cache/{dnf,yum} \
   && rm -rf /var/lib/dnf/history.* \
