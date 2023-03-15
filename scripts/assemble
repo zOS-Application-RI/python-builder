@@ -32,7 +32,7 @@ if [ -z $PKGMGR ]; then
     PKGMGR=/usr/bin/dnf
     if [ -f "/usr/bin/microdnf" ]; then
         PKGMGR=/usr/bin/microdnf
-        if [ -z $PKGMGR_OPTS ]; then
+        if [ -z "${PKGMGR_OPTS}" ]; then
             # NOTE(pabelanger): skip install docs and weak dependencies to
             # make smaller images. Sadly, setting these in dnf.conf don't
             # appear to work.
@@ -49,7 +49,7 @@ mkdir -p /tmp/src
 
 cd /tmp/src
 
-$PKGMGR update -y
+$PKGMGR update -y $PKGMGR_OPTS
 
 function install_bindep {
     # Protect from the bindep builder image use of the assemble script
